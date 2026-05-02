@@ -10,10 +10,10 @@ interface Props {
 export function HelplineBar({ language }: Props) {
   const lang = getLanguage(language);
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2 border-t border-outline-variant bg-surface-container-low px-4 py-2.5 text-sm">
+    <div className="flex flex-wrap items-center justify-center gap-2 border-t border-paper-edge bg-paper-2 px-4 py-2.5 text-sm">
       <a
         href="tel:1950"
-        className="m3-btn m3-btn-filled !bg-google-green !text-white"
+        className="btn btn-primary !bg-green-deep !text-paper"
         aria-label={`Call ${lang.helplineLabel}`}
       >
         <svg
@@ -31,7 +31,7 @@ export function HelplineBar({ language }: Props) {
         href="https://cvigil.eci.gov.in"
         target="_blank"
         rel="noopener noreferrer"
-        className="m3-btn m3-btn-tonal"
+        className="btn btn-ghost"
       >
         <svg
           aria-hidden="true"

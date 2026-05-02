@@ -29,7 +29,7 @@ export function QuickGuides({ language, onPick, disabled }: Props) {
             type="button"
             disabled={disabled}
             onClick={() => onPick(prompt)}
-            className="m3-chip"
+            className="pill"
           >
             {title}
           </button>

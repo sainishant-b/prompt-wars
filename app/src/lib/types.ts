@@ -22,4 +22,5 @@ export type KnowledgeLevel = "novice" | "intermediate" | "expert";
 export interface ChatRequest {
   messages: Message[];
   language: LanguageCode;
+  constituencyId?: string | null;
 }

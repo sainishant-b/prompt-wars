@@ -35,22 +35,22 @@ export default function Home() {
   const lang = getLanguage(language);
 
   return (
-    <main className="flex min-h-screen flex-col bg-surface">
+    <main className="flex min-h-screen flex-col bg-paper paper-grain">
       <nav
-        className="flex items-center justify-between border-b border-outline-variant bg-surface px-6 py-3"
+        className="flex items-center justify-between border-b border-paper-edge bg-paper px-6 py-3"
         aria-label="Top navigation"
       >
         <div className="flex items-center gap-2">
           <GoogleGLogo />
-          <span className="text-base font-medium text-on-surface">
-            <span className="google-gradient">Matdata</span> Mitra
+          <span className="text-base font-medium text-ink font-display">
+            <span className="text-saffron-deep">Matdata</span> Mitra
           </span>
         </div>
         <a
           href="https://eci.gov.in"
           target="_blank"
           rel="noopener noreferrer"
-          className="m3-btn m3-btn-text text-sm"
+          className="btn btn-ghost text-sm"
         >
           ECI
           <svg
@@ -70,16 +70,16 @@ export default function Home() {
           className="text-5xl font-normal tracking-tight sm:text-6xl"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <span className="google-gradient">Matdata</span>{" "}
-          <span className="text-on-surface">Mitra</span>
+          <span className="text-saffron-deep">Matdata</span>{" "}
+          <span className="text-ink">Mitra</span>
         </h1>
         <p
-          className="mx-auto mt-3 text-2xl font-normal text-on-surface-variant"
+          className="mx-auto mt-3 text-2xl font-normal text-ink-3"
           lang="hi"
         >
           मतदाता मित्र
         </p>
-        <p className="mx-auto mt-6 max-w-xl text-lg text-on-surface-variant">
+        <p className="mx-auto mt-6 max-w-xl text-lg text-ink-3">
           {lang.appTagline}
         </p>
       </header>
@@ -90,7 +90,7 @@ export default function Home() {
       >
         <h2
           id="lang-heading"
-          className="mb-4 text-center text-sm font-medium text-on-surface-variant"
+          className="mb-4 text-center text-sm font-medium text-ink-3"
         >
           {lang.selectLanguagePrompt}
         </h2>
@@ -100,7 +100,7 @@ export default function Home() {
       <div className="mx-auto mt-10 px-6">
         <Link
           href="/chat"
-          className="m3-btn m3-btn-filled !h-12 !px-8 !text-base"
+          className="btn btn-primary !h-12 !px-8 !text-base"
           aria-label={lang.startChatLabel}
         >
           {lang.startChatLabel}
@@ -122,34 +122,34 @@ export default function Home() {
       >
         <FeatureCard
           icon={<TranslateIcon />}
-          color="var(--google-blue)"
+          color="var(--saffron-deep)"
           title="10 Languages"
           body="Hindi, English, Tamil, Telugu, Bengali, Marathi, Kannada, Malayalam, Gujarati, Punjabi"
         />
         <FeatureCard
           icon={<TuneIcon />}
-          color="var(--google-red)"
+          color="var(--green-deep)"
           title="Adaptive Explanations"
           body="Simple for first-timers, detailed citations for experts. Adjusts as you ask."
         />
         <FeatureCard
           icon={<VerifiedIcon />}
-          color="var(--google-green)"
+          color="var(--navy)"
           title="Official Information"
           body="Backed by ECI guidelines, RPA 1950 & 1951, and the Constitution of India."
         />
       </section>
 
-      <footer className="mt-auto px-6 py-10 text-center text-xs text-on-surface-variant">
+      <footer className="mt-auto px-6 py-10 text-center text-xs text-ink-3">
         <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-2">
           <span>Powered by</span>
-          <span className="font-medium text-on-surface">Google Gemini</span>
+          <span className="font-medium text-ink">Google Gemini</span>
           <span aria-hidden="true">·</span>
-          <span className="font-medium text-on-surface">Google Cloud Run</span>
+          <span className="font-medium text-ink">Google Cloud Run</span>
           <span aria-hidden="true">·</span>
           <a
             href="tel:1950"
-            className="font-medium text-primary hover:underline"
+            className="font-medium text-saffron-deep hover:underline"
           >
             Voter Helpline 1950
           </a>
@@ -174,15 +174,15 @@ function FeatureCard({
   body: string;
 }) {
   return (
-    <div className="m3-elevated p-6">
+    <div className="rounded-[var(--r-xl)] bg-paper shadow-[var(--shadow-1)] border border-paper-edge p-6">
       <div
         className="mb-4 flex h-10 w-10 items-center justify-center rounded-full"
         style={{ background: `color-mix(in oklab, ${color} 16%, transparent)` }}
       >
         <span style={{ color }}>{icon}</span>
       </div>
-      <h3 className="text-lg font-medium text-on-surface">{title}</h3>
-      <p className="mt-2 text-sm text-on-surface-variant">{body}</p>
+      <h3 className="text-lg font-medium text-ink">{title}</h3>
+      <p className="mt-2 text-sm text-ink-3">{body}</p>
     </div>
   );
 }

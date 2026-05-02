@@ -1,341 +1,227 @@
 @import "tailwindcss";
 
 /* ----------------------------------------------------------------------- */
-/* Google Material 3 design tokens                                          */
-/* Reference: m3.material.io. Palette is Google's brand blue (#4285F4)      */
-/* expanded into a tonal scale, plus accent colours for action elements.    */
+/* Matdata Mitra — civic-India design tokens                                */
+/* Warm gazette paper + ink + saffron + civic green + Ashoka navy           */
 /* ----------------------------------------------------------------------- */
 
 :root {
-  /* Google brand colors */
-  --google-blue: #4285f4;
-  --google-blue-dark: #1a73e8;
-  --google-red: #ea4335;
-  --google-yellow: #fbbc04;
-  --google-green: #34a853;
+  /* Surfaces — warm off-white "gazette paper" */
+  --paper:        oklch(0.985 0.008 85);
+  --paper-2:      oklch(0.965 0.011 85);
+  --paper-3:      oklch(0.935 0.014 85);
+  --paper-edge:   oklch(0.880 0.018 80);
 
-  /* Material 3 — Light scheme */
-  --md-primary: #1a73e8;
-  --md-on-primary: #ffffff;
-  --md-primary-container: #d3e3fd;
-  --md-on-primary-container: #001d35;
+  /* Ink — near-black with cool tint, never pure black */
+  --ink:          oklch(0.22 0.03 250);
+  --ink-2:        oklch(0.38 0.025 250);
+  --ink-3:        oklch(0.55 0.020 250);
+  --ink-4:        oklch(0.72 0.012 250);
 
-  --md-secondary: #5f6368;
-  --md-on-secondary: #ffffff;
-  --md-secondary-container: #e8eaed;
-  --md-on-secondary-container: #1f1f1f;
+  /* Civic accents */
+  --saffron:      oklch(0.72 0.16 60);
+  --saffron-deep: oklch(0.58 0.16 55);
+  --saffron-tint: oklch(0.95 0.05 75);
 
-  --md-tertiary: #ea580c; /* civic-saffron warmth — pairs with blue */
-  --md-on-tertiary: #ffffff;
-  --md-tertiary-container: #ffe4d3;
-  --md-on-tertiary-container: #3a1500;
+  --green:        oklch(0.58 0.13 155);
+  --green-deep:   oklch(0.46 0.13 155);
+  --green-tint:   oklch(0.94 0.05 155);
 
-  --md-error: #c5221f;
-  --md-on-error: #ffffff;
+  --navy:         oklch(0.42 0.10 250);
+  --navy-tint:    oklch(0.94 0.03 250);
 
-  --md-surface: #ffffff;
-  --md-surface-dim: #f8f9fa;
-  --md-surface-container-lowest: #ffffff;
-  --md-surface-container-low: #f8f9fa;
-  --md-surface-container: #f1f3f4;
-  --md-surface-container-high: #e8eaed;
-  --md-surface-container-highest: #dadce0;
-  --md-on-surface: #1f1f1f;
-  --md-on-surface-variant: #444746;
-  --md-outline: #747775;
-  --md-outline-variant: #c4c7c5;
+  --alert:        oklch(0.55 0.18 25);
 
-  --md-shadow-1: 0 1px 2px 0 rgb(60 64 67 / 0.302),
-    0 1px 3px 1px rgb(60 64 67 / 0.149);
-  --md-shadow-2: 0 1px 2px 0 rgb(60 64 67 / 0.302),
-    0 2px 6px 2px rgb(60 64 67 / 0.149);
-  --md-shadow-3: 0 4px 8px 3px rgb(60 64 67 / 0.149),
-    0 1px 3px 0 rgb(60 64 67 / 0.302);
+  /* Type — Next.js loads these and exposes them as the --font-* variables below */
+  --font-ui:      var(--font-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-indic:   var(--font-tiro), "Tiro Devanagari Hindi", "Plus Jakarta Sans", serif;
+  --font-mono:    var(--font-jetbrains), "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 22px;
+
+  /* Shadows — soft, warm-tinted */
+  --shadow-1: 0 1px 2px rgb(60 50 40 / 0.06), 0 1px 1px rgb(60 50 40 / 0.04);
+  --shadow-2: 0 4px 12px rgb(60 50 40 / 0.08), 0 1px 2px rgb(60 50 40 / 0.06);
+  --shadow-3: 0 12px 32px rgb(60 50 40 / 0.12), 0 2px 6px rgb(60 50 40 / 0.06);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --md-primary: #a8c7fa;
-    --md-on-primary: #062e6f;
-    --md-primary-container: #0842a0;
-    --md-on-primary-container: #d3e3fd;
-
-    --md-secondary: #c4c7c5;
-    --md-on-secondary: #2d3134;
-    --md-secondary-container: #444746;
-    --md-on-secondary-container: #e3e3e3;
-
-    --md-tertiary: #ffb691;
-    --md-on-tertiary: #5a2400;
-    --md-tertiary-container: #7d3700;
-    --md-on-tertiary-container: #ffdcc6;
-
-    --md-error: #f2b8b5;
-    --md-on-error: #601410;
-
-    --md-surface: #131314;
-    --md-surface-dim: #1b1b1b;
-    --md-surface-container-lowest: #0e0e0e;
-    --md-surface-container-low: #1b1b1b;
-    --md-surface-container: #1e1f20;
-    --md-surface-container-high: #282a2c;
-    --md-surface-container-highest: #333537;
-    --md-on-surface: #e3e3e3;
-    --md-on-surface-variant: #c4c7c5;
-    --md-outline: #8e918f;
-    --md-outline-variant: #444746;
-  }
-}
-
-/* Map Material tokens onto Tailwind theme so utility classes work          */
+/* Map tokens onto Tailwind theme so utilities work */
 @theme inline {
-  --color-primary: var(--md-primary);
-  --color-on-primary: var(--md-on-primary);
-  --color-primary-container: var(--md-primary-container);
-  --color-on-primary-container: var(--md-on-primary-container);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+  --color-paper-edge: var(--paper-edge);
 
-  --color-secondary: var(--md-secondary);
-  --color-secondary-container: var(--md-secondary-container);
-  --color-on-secondary-container: var(--md-on-secondary-container);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
 
-  --color-tertiary: var(--md-tertiary);
-  --color-on-tertiary: var(--md-on-tertiary);
-  --color-tertiary-container: var(--md-tertiary-container);
-  --color-on-tertiary-container: var(--md-on-tertiary-container);
+  --color-saffron: var(--saffron);
+  --color-saffron-deep: var(--saffron-deep);
+  --color-saffron-tint: var(--saffron-tint);
 
-  --color-error: var(--md-error);
-  --color-on-error: var(--md-on-error);
+  --color-green: var(--green);
+  --color-green-deep: var(--green-deep);
+  --color-green-tint: var(--green-tint);
 
-  --color-surface: var(--md-surface);
-  --color-surface-dim: var(--md-surface-dim);
-  --color-surface-container-lowest: var(--md-surface-container-lowest);
-  --color-surface-container-low: var(--md-surface-container-low);
-  --color-surface-container: var(--md-surface-container);
-  --color-surface-container-high: var(--md-surface-container-high);
-  --color-surface-container-highest: var(--md-surface-container-highest);
-  --color-on-surface: var(--md-on-surface);
-  --color-on-surface-variant: var(--md-on-surface-variant);
-  --color-outline: var(--md-outline);
-  --color-outline-variant: var(--md-outline-variant);
+  --color-navy: var(--navy);
+  --color-navy-tint: var(--navy-tint);
 
-  --color-google-blue: var(--google-blue);
-  --color-google-red: var(--google-red);
-  --color-google-yellow: var(--google-yellow);
-  --color-google-green: var(--google-green);
+  --color-alert: var(--alert);
 
-  --font-sans:
-    "Google Sans", var(--font-roboto-flex), var(--font-roboto),
-    "Noto Sans Devanagari", system-ui, sans-serif;
-  --font-display:
-    "Google Sans Display", "Google Sans", var(--font-roboto-flex),
-    "Noto Sans Devanagari", system-ui, sans-serif;
+  --font-sans: var(--font-ui);
+  --font-display: var(--font-display);
+  --font-indic: var(--font-indic);
+  --font-mono: var(--font-mono);
 }
 
-html,
-body {
+html, body {
   height: 100%;
 }
 
 body {
-  background: var(--md-surface);
-  color: var(--md-on-surface);
-  font-family:
-    "Google Sans", "Google Sans Text", var(--font-roboto-flex),
-    var(--font-roboto), "Noto Sans Devanagari", "Noto Sans Tamil",
-    "Noto Sans Telugu", "Noto Sans Bengali", "Noto Sans Kannada",
-    "Noto Sans Malayalam", "Noto Sans Gujarati", "Noto Sans Gurmukhi",
-    "Roboto", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "cv11", "ss01";
 }
 
-/* ----------------------------------------------------------------------- */
-/* Material 3 button utilities — feel like the buttons used across Google. */
-/* Hover state lifts elevation and applies a state-layer overlay.          */
-/* ----------------------------------------------------------------------- */
+/* Paper grain — applied to body / hero areas */
+.paper-grain {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(rgb(140 110 70 / 0.05) 1px, transparent 1px),
+    radial-gradient(rgb(140 110 70 / 0.04) 1px, transparent 1px);
+  background-size: 24px 24px, 56px 56px;
+  background-position: 0 0, 12px 12px;
+}
 
-.m3-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  height: 2.5rem;
-  padding: 0 1.5rem;
-  border-radius: 9999px;
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  transition:
-    background-color 150ms cubic-bezier(0.2, 0, 0, 1),
-    box-shadow 150ms cubic-bezier(0.2, 0, 0, 1),
-    color 150ms cubic-bezier(0.2, 0, 0, 1);
-  user-select: none;
-  white-space: nowrap;
+/* Ballot-stub: dotted left edge like a tear-off coupon */
+.ballot-stub {
   position: relative;
-  overflow: hidden;
+}
+.ballot-stub::before {
+  content: "";
+  position: absolute;
+  inset: 8px auto 8px 0;
+  width: 1px;
+  border-left: 1.5px dashed var(--paper-edge);
 }
 
-.m3-btn:focus-visible {
-  outline: 2px solid var(--md-primary);
-  outline-offset: 2px;
+/* Hairline rules */
+.rule { border-top: 1px solid var(--paper-edge); }
+.rule-v { border-left: 1px solid var(--paper-edge); }
+
+/* Chakra ornament — pure CSS conic stripes, not figurative */
+.chakra-bg {
+  background:
+    repeating-conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0 7deg,
+      rgb(40 70 130 / 0.08) 7deg 7.5deg
+    );
+  border-radius: 50%;
 }
 
-.m3-btn:disabled {
-  opacity: 0.38;
-  cursor: not-allowed;
-}
-
-.m3-btn-filled {
-  background: var(--md-primary);
-  color: var(--md-on-primary);
-  box-shadow: var(--md-shadow-1);
-}
-
-.m3-btn-filled:hover:not(:disabled) {
-  box-shadow: var(--md-shadow-2);
-  background-image: linear-gradient(
-    rgba(255, 255, 255, 0.08),
-    rgba(255, 255, 255, 0.08)
-  );
-}
-
-.m3-btn-tonal {
-  background: var(--md-secondary-container);
-  color: var(--md-on-secondary-container);
-}
-
-.m3-btn-tonal:hover:not(:disabled) {
-  background-image: linear-gradient(
-    rgba(0, 0, 0, 0.08),
-    rgba(0, 0, 0, 0.08)
-  );
-  box-shadow: var(--md-shadow-1);
-}
-
-.m3-btn-outlined {
-  background: transparent;
-  color: var(--md-primary);
-  border: 1px solid var(--md-outline);
-}
-
-.m3-btn-outlined:hover:not(:disabled) {
-  background: color-mix(in oklab, var(--md-primary) 8%, transparent);
-}
-
-.m3-btn-text {
-  background: transparent;
-  color: var(--md-primary);
-  padding: 0 0.75rem;
-}
-
-.m3-btn-text:hover:not(:disabled) {
-  background: color-mix(in oklab, var(--md-primary) 8%, transparent);
-}
-
-.m3-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  height: 2rem;
-  padding: 0 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--md-outline-variant);
-  background: var(--md-surface);
-  color: var(--md-on-surface-variant);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 150ms ease;
+/* Pill chip */
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 32px; padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--paper-edge);
+  background: var(--paper);
+  color: var(--ink-2);
+  font: 500 13px/1 var(--font-ui);
+  letter-spacing: 0.01em;
   white-space: nowrap;
-  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+.pill:hover { background: var(--paper-2); }
+.pill.is-active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.pill:focus-visible { outline: 2px solid var(--saffron-deep); outline-offset: 2px; }
+
+/* Filled action */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  height: 44px; padding: 0 22px;
+  border-radius: 999px;
+  font: 600 14px/1 var(--font-ui);
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 150ms ease, opacity 150ms ease, transform 100ms ease;
+}
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn:focus-visible { outline: 2px solid var(--saffron-deep); outline-offset: 2px; }
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover:not(:disabled) { background: var(--ink-2); }
+.btn-saffron { background: var(--saffron-deep); color: var(--paper); }
+.btn-saffron:hover:not(:disabled) { background: var(--saffron); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--paper-edge); }
+.btn-ghost:hover:not(:disabled) { background: var(--paper-2); }
+
+/* Section eyebrow — small caps label */
+.eyebrow {
+  font: 600 11px/1.2 var(--font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
 }
 
-.m3-chip:hover:not(:disabled) {
-  background: color-mix(in oklab, var(--md-primary) 6%, var(--md-surface));
+/* "Stamp" — subtle stamped ink mark for trust badges */
+.stamp {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px;
+  border: 1.5px solid var(--ink-2);
+  border-radius: 4px;
+  color: var(--ink-2);
+  font: 600 11px/1 var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: rotate(-1.5deg);
+  opacity: 0.78;
 }
 
-.m3-chip:focus-visible {
-  outline: 2px solid var(--md-primary);
-  outline-offset: 2px;
+/* Helpers */
+.font-indic { font-family: var(--font-indic); }
+.font-mono  { font-family: var(--font-mono); }
+.font-display { font-family: var(--font-display); }
+
+/* Wordmark cycling animation */
+@keyframes wordmarkFade {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-.m3-chip:disabled {
-  opacity: 0.38;
-  cursor: not-allowed;
-}
+/* Markdown content typography */
+.prose-mitra p { margin: 0.5em 0; }
+.prose-mitra ul, .prose-mitra ol { margin: 0.5em 0; padding-left: 1.4em; }
+.prose-mitra li { margin: 0.2em 0; }
+.prose-mitra h1, .prose-mitra h2, .prose-mitra h3 { font-weight: 700; margin: 0.6em 0 0.3em; letter-spacing: -0.01em; }
+.prose-mitra strong { font-weight: 700; color: var(--ink); }
+.prose-mitra code { font-family: var(--font-mono); background: var(--paper-2); padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
 
-.m3-card {
-  background: var(--md-surface-container-low);
-  border: 1px solid var(--md-outline-variant);
-  border-radius: 0.75rem;
-  transition: box-shadow 150ms ease;
-}
-
-.m3-elevated {
-  background: var(--md-surface-container-low);
-  border-radius: 1rem;
-  box-shadow: var(--md-shadow-1);
-}
-
-.m3-elevated:hover {
-  box-shadow: var(--md-shadow-2);
-}
-
-/* ----------------------------------------------------------------------- */
-/* Google "G" gradient text utility for the wordmark                        */
-/* ----------------------------------------------------------------------- */
-
-.google-gradient {
-  background: linear-gradient(
-    90deg,
-    var(--google-blue) 0%,
-    var(--google-red) 33%,
-    var(--google-yellow) 66%,
-    var(--google-green) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Markdown content typography refinements                                  */
-.prose :where(p):not(:where([class~="not-prose"] *)) {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-/* Scrollbar — slimmer, Google-app feel                                     */
+/* Slim Google-app-style scrollbars */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--md-outline-variant) transparent;
+  scrollbar-color: var(--paper-edge) transparent;
 }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: var(--paper-edge); border-radius: 4px; }
+*::-webkit-scrollbar-thumb:hover { background: var(--ink-3); }
 
-*::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: var(--md-outline-variant);
-  border-radius: 4px;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: var(--md-outline);
-}
-
-/* Accessibility: respect prefers-reduced-motion                            */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

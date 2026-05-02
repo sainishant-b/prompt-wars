@@ -17,7 +17,7 @@ export function LanguageSelector({ value, onChange, variant = "grid" }: Props) {
         <select
           value={value}
           onChange={(e) => onChange(e.target.value as LanguageCode)}
-          className="h-9 rounded-full border border-outline-variant bg-surface-container-low px-4 text-sm font-medium text-on-surface transition-colors hover:bg-surface-container focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+          className="h-9 rounded-full border border-paper-edge bg-paper-2 px-4 text-sm font-medium text-ink transition-colors hover:bg-paper-3 focus:border-ink focus:outline-none focus:ring-2 focus:ring-ink/20"
           aria-label="Select language"
         >
           {Object.values(LANGUAGES).map((lang) => (
@@ -47,14 +47,14 @@ export function LanguageSelector({ value, onChange, variant = "grid" }: Props) {
             onClick={() => onChange(lang.code)}
             className={[
               "flex flex-col items-center justify-center rounded-2xl px-4 py-5 text-center transition-all",
-              "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2",
               selected
-                ? "bg-primary-container text-on-primary-container shadow-[var(--md-shadow-1)]"
-                : "border border-outline-variant bg-surface text-on-surface hover:bg-surface-container",
+                ? "bg-ink text-paper shadow-[var(--shadow-1)]"
+                : "border border-paper-edge bg-paper text-ink hover:bg-paper-2",
             ].join(" ")}
           >
             <span className="text-lg font-medium">{lang.nativeName}</span>
-            <span className="mt-1 text-xs text-on-surface-variant">
+            <span className="mt-1 text-xs text-ink-3">
               {lang.englishName}
             </span>
           </button>

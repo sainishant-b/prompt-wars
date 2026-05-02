@@ -12,21 +12,21 @@ const STYLE: Record<
 > = {
   novice: {
     label: "Beginner",
-    bg: "bg-[color-mix(in_oklab,var(--google-green)_18%,transparent)]",
-    fg: "text-[var(--google-green)]",
-    dot: "bg-[var(--google-green)]",
+    bg: "bg-[var(--green-tint)]",
+    fg: "text-[var(--green-deep)]",
+    dot: "bg-[var(--green-deep)]",
   },
   intermediate: {
     label: "Familiar",
-    bg: "bg-[color-mix(in_oklab,var(--google-yellow)_24%,transparent)]",
-    fg: "text-[#a05a00]",
-    dot: "bg-[var(--google-yellow)]",
+    bg: "bg-[var(--saffron-tint)]",
+    fg: "text-[var(--saffron-deep)]",
+    dot: "bg-[var(--saffron-deep)]",
   },
   expert: {
     label: "Expert",
-    bg: "bg-[color-mix(in_oklab,var(--google-blue)_18%,transparent)]",
-    fg: "text-[var(--google-blue-dark)]",
-    dot: "bg-[var(--google-blue)]",
+    bg: "bg-[var(--navy-tint)]",
+    fg: "text-[var(--navy)]",
+    dot: "bg-[var(--navy)]",
   },
 };
 

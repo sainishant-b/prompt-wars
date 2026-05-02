@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { streamChat } from "@/lib/gemini";
 import { detectKnowledgeLevel } from "@/lib/adaptive";
 import { isValidLanguage } from "@/lib/language";
+import { isValidConstituencyId } from "@/lib/constituencies";
 import type { ChatRequest, Message } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -41,9 +42,22 @@ function validateRequest(body: unknown): ChatRequest | { error: string } {
     return { error: "Invalid or unsupported language" };
   }
 
+  let constituencyId: string | null | undefined;
+  if (b.constituencyId === undefined || b.constituencyId === null) {
+    constituencyId = null;
+  } else if (typeof b.constituencyId === "string") {
+    if (!isValidConstituencyId(b.constituencyId)) {
+      return { error: "Unknown constituencyId" };
+    }
+    constituencyId = b.constituencyId;
+  } else {
+    return { error: "constituencyId must be a string or null" };
+  }
+
   return {
     messages: b.messages as Message[],
     language: b.language,
+    constituencyId,
   };
 }
 
@@ -74,7 +88,7 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const { messages, language } = validated;
+  const { messages, language, constituencyId } = validated;
   const lastMessage = messages[messages.length - 1];
   if (lastMessage.role !== "user") {
     return new Response(
@@ -96,6 +110,7 @@ export async function POST(request: NextRequest) {
           level,
           apiKey,
           signal: abort,
+          constituencyId,
         })) {
           if (abort.aborted) break;
           controller.enqueue(encoder.encode(chunk));
@@ -114,11 +129,12 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  return new Response(stream, {
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Cache-Control": "no-store, no-cache, must-revalidate",
-      "X-Knowledge-Level": level,
-    },
-  });
+  const headers: Record<string, string> = {
+    "Content-Type": "text/plain; charset=utf-8",
+    "Cache-Control": "no-store, no-cache, must-revalidate",
+    "X-Knowledge-Level": level,
+  };
+  if (constituencyId) headers["X-Constituency-Id"] = constituencyId;
+
+  return new Response(stream, { headers });
 }

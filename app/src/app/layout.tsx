@@ -1,44 +1,117 @@
 import type { Metadata } from "next";
-import { Roboto_Flex, Roboto, Noto_Sans_Devanagari } from "next/font/google";
+import {
+  Plus_Jakarta_Sans,
+  Tiro_Devanagari_Hindi,
+  JetBrains_Mono,
+  Noto_Sans_Devanagari,
+  Noto_Sans_Tamil,
+  Noto_Sans_Telugu,
+  Noto_Sans_Bengali,
+  Noto_Sans_Kannada,
+  Noto_Sans_Malayalam,
+  Noto_Sans_Gujarati,
+  Noto_Sans_Gurmukhi,
+} from "next/font/google";
 import "./globals.css";
 
-const robotoFlex = Roboto_Flex({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-roboto-flex",
+  weight: ["400", "500", "600", "700", "800"],
+  style: ["normal", "italic"],
+  variable: "--font-jakarta",
   display: "swap",
 });
 
-const roboto = Roboto({
+const tiroHindi = Tiro_Devanagari_Hindi({
+  subsets: ["devanagari", "latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-tiro",
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-roboto",
+  weight: ["400", "500", "600"],
+  variable: "--font-jetbrains",
   display: "swap",
 });
 
 const notoDevanagari = Noto_Sans_Devanagari({
   subsets: ["devanagari"],
-  weight: ["400", "500", "700"],
-  variable: "--font-noto-devanagari",
+  weight: ["500", "700"],
+  variable: "--font-noto-dev",
+  display: "swap",
+});
+
+const notoTamil = Noto_Sans_Tamil({
+  subsets: ["tamil"],
+  weight: ["500", "700"],
+  variable: "--font-noto-ta",
+  display: "swap",
+});
+
+const notoTelugu = Noto_Sans_Telugu({
+  subsets: ["telugu"],
+  weight: ["500", "700"],
+  variable: "--font-noto-te",
+  display: "swap",
+});
+
+const notoBengali = Noto_Sans_Bengali({
+  subsets: ["bengali"],
+  weight: ["500", "700"],
+  variable: "--font-noto-bn",
+  display: "swap",
+});
+
+const notoKannada = Noto_Sans_Kannada({
+  subsets: ["kannada"],
+  weight: ["500", "700"],
+  variable: "--font-noto-kn",
+  display: "swap",
+});
+
+const notoMalayalam = Noto_Sans_Malayalam({
+  subsets: ["malayalam"],
+  weight: ["500", "700"],
+  variable: "--font-noto-ml",
+  display: "swap",
+});
+
+const notoGujarati = Noto_Sans_Gujarati({
+  subsets: ["gujarati"],
+  weight: ["500", "700"],
+  variable: "--font-noto-gu",
+  display: "swap",
+});
+
+const notoGurmukhi = Noto_Sans_Gurmukhi({
+  subsets: ["gurmukhi"],
+  weight: ["500", "700"],
+  variable: "--font-noto-pa",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Matdata Mitra — Indian Election Civic Education Assistant",
+  title: "Matdata Mitra — Voting, explained in your own language",
   description:
-    "Free, multilingual chatbot that explains the Indian election process, voter rights, and what to do when problems arise. Built for PromptWars Challenge 2 with Google Gemini and Cloud Run.",
+    "Matdata Mitra (मतदाता मित्र) is a friendly multilingual guide to Indian elections. Ask Mitra anything — registration, polling day, your rights — backed by ECI guidelines, RPA 1950 & 1951, and the Constitution.",
   keywords: [
+    "Matdata Mitra",
     "Indian elections",
     "voter education",
     "ECI",
     "civic education",
     "voter rights",
-    "election commission of india",
-    "matdata",
-    "voter helpline",
+    "Lok Sabha",
+    "Vidhan Sabha",
+    "RPA 1950",
+    "RPA 1951",
   ],
   openGraph: {
     title: "Matdata Mitra",
-    description: "Your friendly multilingual guide to Indian elections.",
+    description: "Voting, explained in your own language.",
     type: "website",
     locale: "en_IN",
   },
@@ -52,11 +125,23 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`h-full antialiased ${robotoFlex.variable} ${roboto.variable} ${notoDevanagari.variable}`}
+      suppressHydrationWarning
+      className={[
+        jakarta.variable,
+        tiroHindi.variable,
+        jetbrains.variable,
+        notoDevanagari.variable,
+        notoTamil.variable,
+        notoTelugu.variable,
+        notoBengali.variable,
+        notoKannada.variable,
+        notoMalayalam.variable,
+        notoGujarati.variable,
+        notoGurmukhi.variable,
+        "h-full antialiased",
+      ].join(" ")}
     >
-      <body className="min-h-full flex flex-col bg-surface text-on-surface font-sans">
-        {children}
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

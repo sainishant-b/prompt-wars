@@ -22,8 +22,8 @@ export function MessageBubble({ message, isStreaming }: Props) {
         className={[
           "max-w-[85%] rounded-3xl px-5 py-3 text-[0.95rem] leading-relaxed",
           isUser
-            ? "bg-primary text-on-primary rounded-br-md shadow-[var(--md-shadow-1)]"
-            : "bg-surface-container-low text-on-surface border border-outline-variant rounded-bl-md",
+            ? "bg-ink text-paper rounded-br-md shadow-[var(--shadow-1)]"
+            : "bg-paper-2 text-ink border border-paper-edge rounded-bl-md",
         ].join(" ")}
         aria-label={isUser ? "Your message" : "Assistant response"}
       >
@@ -36,7 +36,7 @@ export function MessageBubble({ message, isStreaming }: Props) {
             </ReactMarkdown>
             {isStreaming && (
               <span
-                className="ml-1 inline-flex h-2 w-2 animate-pulse rounded-full bg-primary align-middle"
+                className="ml-1 inline-flex h-2 w-2 animate-pulse rounded-full bg-ink align-middle"
                 aria-label="Assistant is typing"
               />
             )}
