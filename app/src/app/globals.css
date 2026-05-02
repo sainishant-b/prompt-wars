@@ -1,0 +1,344 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------- */
+/* Google Material 3 design tokens                                          */
+/* Reference: m3.material.io. Palette is Google's brand blue (#4285F4)      */
+/* expanded into a tonal scale, plus accent colours for action elements.    */
+/* ----------------------------------------------------------------------- */
+
+:root {
+  /* Google brand colors */
+  --google-blue: #4285f4;
+  --google-blue-dark: #1a73e8;
+  --google-red: #ea4335;
+  --google-yellow: #fbbc04;
+  --google-green: #34a853;
+
+  /* Material 3 — Light scheme */
+  --md-primary: #1a73e8;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #d3e3fd;
+  --md-on-primary-container: #001d35;
+
+  --md-secondary: #5f6368;
+  --md-on-secondary: #ffffff;
+  --md-secondary-container: #e8eaed;
+  --md-on-secondary-container: #1f1f1f;
+
+  --md-tertiary: #ea580c; /* civic-saffron warmth — pairs with blue */
+  --md-on-tertiary: #ffffff;
+  --md-tertiary-container: #ffe4d3;
+  --md-on-tertiary-container: #3a1500;
+
+  --md-error: #c5221f;
+  --md-on-error: #ffffff;
+
+  --md-surface: #ffffff;
+  --md-surface-dim: #f8f9fa;
+  --md-surface-container-lowest: #ffffff;
+  --md-surface-container-low: #f8f9fa;
+  --md-surface-container: #f1f3f4;
+  --md-surface-container-high: #e8eaed;
+  --md-surface-container-highest: #dadce0;
+  --md-on-surface: #1f1f1f;
+  --md-on-surface-variant: #444746;
+  --md-outline: #747775;
+  --md-outline-variant: #c4c7c5;
+
+  --md-shadow-1: 0 1px 2px 0 rgb(60 64 67 / 0.302),
+    0 1px 3px 1px rgb(60 64 67 / 0.149);
+  --md-shadow-2: 0 1px 2px 0 rgb(60 64 67 / 0.302),
+    0 2px 6px 2px rgb(60 64 67 / 0.149);
+  --md-shadow-3: 0 4px 8px 3px rgb(60 64 67 / 0.149),
+    0 1px 3px 0 rgb(60 64 67 / 0.302);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --md-primary: #a8c7fa;
+    --md-on-primary: #062e6f;
+    --md-primary-container: #0842a0;
+    --md-on-primary-container: #d3e3fd;
+
+    --md-secondary: #c4c7c5;
+    --md-on-secondary: #2d3134;
+    --md-secondary-container: #444746;
+    --md-on-secondary-container: #e3e3e3;
+
+    --md-tertiary: #ffb691;
+    --md-on-tertiary: #5a2400;
+    --md-tertiary-container: #7d3700;
+    --md-on-tertiary-container: #ffdcc6;
+
+    --md-error: #f2b8b5;
+    --md-on-error: #601410;
+
+    --md-surface: #131314;
+    --md-surface-dim: #1b1b1b;
+    --md-surface-container-lowest: #0e0e0e;
+    --md-surface-container-low: #1b1b1b;
+    --md-surface-container: #1e1f20;
+    --md-surface-container-high: #282a2c;
+    --md-surface-container-highest: #333537;
+    --md-on-surface: #e3e3e3;
+    --md-on-surface-variant: #c4c7c5;
+    --md-outline: #8e918f;
+    --md-outline-variant: #444746;
+  }
+}
+
+/* Map Material tokens onto Tailwind theme so utility classes work          */
+@theme inline {
+  --color-primary: var(--md-primary);
+  --color-on-primary: var(--md-on-primary);
+  --color-primary-container: var(--md-primary-container);
+  --color-on-primary-container: var(--md-on-primary-container);
+
+  --color-secondary: var(--md-secondary);
+  --color-secondary-container: var(--md-secondary-container);
+  --color-on-secondary-container: var(--md-on-secondary-container);
+
+  --color-tertiary: var(--md-tertiary);
+  --color-on-tertiary: var(--md-on-tertiary);
+  --color-tertiary-container: var(--md-tertiary-container);
+  --color-on-tertiary-container: var(--md-on-tertiary-container);
+
+  --color-error: var(--md-error);
+  --color-on-error: var(--md-on-error);
+
+  --color-surface: var(--md-surface);
+  --color-surface-dim: var(--md-surface-dim);
+  --color-surface-container-lowest: var(--md-surface-container-lowest);
+  --color-surface-container-low: var(--md-surface-container-low);
+  --color-surface-container: var(--md-surface-container);
+  --color-surface-container-high: var(--md-surface-container-high);
+  --color-surface-container-highest: var(--md-surface-container-highest);
+  --color-on-surface: var(--md-on-surface);
+  --color-on-surface-variant: var(--md-on-surface-variant);
+  --color-outline: var(--md-outline);
+  --color-outline-variant: var(--md-outline-variant);
+
+  --color-google-blue: var(--google-blue);
+  --color-google-red: var(--google-red);
+  --color-google-yellow: var(--google-yellow);
+  --color-google-green: var(--google-green);
+
+  --font-sans:
+    "Google Sans", var(--font-roboto-flex), var(--font-roboto),
+    "Noto Sans Devanagari", system-ui, sans-serif;
+  --font-display:
+    "Google Sans Display", "Google Sans", var(--font-roboto-flex),
+    "Noto Sans Devanagari", system-ui, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+  font-family:
+    "Google Sans", "Google Sans Text", var(--font-roboto-flex),
+    var(--font-roboto), "Noto Sans Devanagari", "Noto Sans Tamil",
+    "Noto Sans Telugu", "Noto Sans Bengali", "Noto Sans Kannada",
+    "Noto Sans Malayalam", "Noto Sans Gujarati", "Noto Sans Gurmukhi",
+    "Roboto", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01";
+}
+
+/* ----------------------------------------------------------------------- */
+/* Material 3 button utilities — feel like the buttons used across Google. */
+/* Hover state lifts elevation and applies a state-layer overlay.          */
+/* ----------------------------------------------------------------------- */
+
+.m3-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding: 0 1.5rem;
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    background-color 150ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 150ms cubic-bezier(0.2, 0, 0, 1),
+    color 150ms cubic-bezier(0.2, 0, 0, 1);
+  user-select: none;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.m3-btn:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+.m3-btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.m3-btn-filled {
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  box-shadow: var(--md-shadow-1);
+}
+
+.m3-btn-filled:hover:not(:disabled) {
+  box-shadow: var(--md-shadow-2);
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.08)
+  );
+}
+
+.m3-btn-tonal {
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+
+.m3-btn-tonal:hover:not(:disabled) {
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.08),
+    rgba(0, 0, 0, 0.08)
+  );
+  box-shadow: var(--md-shadow-1);
+}
+
+.m3-btn-outlined {
+  background: transparent;
+  color: var(--md-primary);
+  border: 1px solid var(--md-outline);
+}
+
+.m3-btn-outlined:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--md-primary) 8%, transparent);
+}
+
+.m3-btn-text {
+  background: transparent;
+  color: var(--md-primary);
+  padding: 0 0.75rem;
+}
+
+.m3-btn-text:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--md-primary) 8%, transparent);
+}
+
+.m3-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2rem;
+  padding: 0 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--md-outline-variant);
+  background: var(--md-surface);
+  color: var(--md-on-surface-variant);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 150ms ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.m3-chip:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--md-primary) 6%, var(--md-surface));
+}
+
+.m3-chip:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+.m3-chip:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.m3-card {
+  background: var(--md-surface-container-low);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: 0.75rem;
+  transition: box-shadow 150ms ease;
+}
+
+.m3-elevated {
+  background: var(--md-surface-container-low);
+  border-radius: 1rem;
+  box-shadow: var(--md-shadow-1);
+}
+
+.m3-elevated:hover {
+  box-shadow: var(--md-shadow-2);
+}
+
+/* ----------------------------------------------------------------------- */
+/* Google "G" gradient text utility for the wordmark                        */
+/* ----------------------------------------------------------------------- */
+
+.google-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--google-blue) 0%,
+    var(--google-red) 33%,
+    var(--google-yellow) 66%,
+    var(--google-green) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Markdown content typography refinements                                  */
+.prose :where(p):not(:where([class~="not-prose"] *)) {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Scrollbar — slimmer, Google-app feel                                     */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--md-outline-variant) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--md-outline-variant);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--md-outline);
+}
+
+/* Accessibility: respect prefers-reduced-motion                            */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

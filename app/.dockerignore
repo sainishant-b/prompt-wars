@@ -1,0 +1,17 @@
+.git
+.gitignore
+.next
+node_modules
+npm-debug.log
+README.md
+__tests__
+jest.config.ts
+jest.setup.ts
+.env*
+!.env.example
+.dockerignore
+Dockerfile
+.vscode
+.idea
+coverage
+*.log
