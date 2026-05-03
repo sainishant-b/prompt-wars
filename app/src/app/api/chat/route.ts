@@ -5,11 +5,33 @@ import { isValidLanguage } from "@/lib/language";
 import { isValidConstituencyId } from "@/lib/constituencies";
 import type { ChatRequest, Message } from "@/lib/types";
 
+// Structured logging compatible with Google Cloud Logging
+function log(severity: "INFO" | "WARNING" | "ERROR", data: Record<string, unknown>) {
+  console.log(JSON.stringify({ severity, ...data }));
+}
+
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const MAX_MESSAGES = 50;
 const MAX_MESSAGE_LENGTH = 4000;
+
+// Simple in-process rate limiter: 20 requests per IP per minute
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 20;
+const RATE_WINDOW_MS = 60_000;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  if (entry.count >= RATE_LIMIT) return true;
+  entry.count++;
+  return false;
+}
 
 function isValidMessage(m: unknown): m is Message {
   if (!m || typeof m !== "object") return false;
@@ -62,6 +84,17 @@ function validateRequest(body: unknown): ChatRequest | { error: string } {
 }
 
 export async function POST(request: NextRequest) {
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    request.headers.get("x-real-ip") ??
+    "unknown";
+  if (isRateLimited(ip)) {
+    return new Response(
+      JSON.stringify({ error: "Too many requests. Please wait a moment." }),
+      { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "60" } },
+    );
+  }
+
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return new Response(
@@ -98,6 +131,14 @@ export async function POST(request: NextRequest) {
   }
 
   const level = detectKnowledgeLevel(messages);
+  log("INFO", {
+    event: "chat_request",
+    language,
+    level,
+    messageCount: messages.length,
+    constituencyId: constituencyId ?? null,
+  });
+
   const encoder = new TextEncoder();
   const abort = request.signal;
 
@@ -118,6 +159,7 @@ export async function POST(request: NextRequest) {
         controller.close();
       } catch (err) {
         const message = err instanceof Error ? err.message : "Unknown error";
+        log("ERROR", { event: "stream_error", error: message, language, level });
         controller.enqueue(
           encoder.encode(`\n\n[Error: ${message}]`),
         );

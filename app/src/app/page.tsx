@@ -46,7 +46,7 @@ export default function Home() {
   const [ballotLine1, ballotLine2] = lang.ballotTitle.split("\n");
 
   return (
-    <main className="mm flex min-h-screen flex-col paper-grain text-ink">
+    <main id="main-content" className="mm flex min-h-screen flex-col paper-grain text-ink">
       {/* top bar — wordmark only */}
       <nav
         className="flex items-center justify-between border-b border-paper-edge px-6 py-4 md:px-10 md:py-5"

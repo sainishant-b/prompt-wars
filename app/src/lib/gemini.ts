@@ -5,7 +5,7 @@ import { styleInstructionFor } from "./adaptive";
 import { getConstituency, type Constituency } from "./constituencies";
 import type { KnowledgeLevel, LanguageCode, Message } from "./types";
 
-const MODEL_NAME = "gemini-2.0-flash";
+const MODEL_NAME = "gemini-2.5-flash";
 
 function constituencyContextBlock(c: Constituency): string {
   const cands = c.candidates2024
