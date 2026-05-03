@@ -113,11 +113,5 @@ async function* streamChatGemini(
 export async function* streamChat(
   params: StreamChatParams,
 ): AsyncGenerator<string> {
-  const provider = (process.env.AI_PROVIDER || "gemini").toLowerCase();
-  if (provider === "void") {
-    const { streamChatVoid } = await import("./providers/void");
-    yield* streamChatVoid(params);
-    return;
-  }
   yield* streamChatGemini(params);
 }

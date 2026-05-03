@@ -96,9 +96,9 @@ The model is explicitly instructed *not* to speculate beyond this block, and to 
 - Reduced-motion media query disables wordmark fade and other transitions.
 - High-contrast ink/paper colour pair, never pure black.
 
-### Provider abstraction (hybrid AI runtime)
-- Default: **Google Gemini** (`gemini-1.5-flash` via `@google/generative-ai`).
-- Optional fallback: any OpenAI-compatible endpoint via `AI_PROVIDER=void`. Implemented as a plain `fetch` SSE parser — no extra SDK dependencies. Lets you swap in proxy services for development without disturbing the canonical Gemini path used in production.
+### Google Gemini AI runtime
+- Powered by **Gemini 1.5 Flash** via `@google/generative-ai`.
+- Streaming responses via `sendMessageStream` — no round-trip latency, tokens arrive as Gemini generates them.
 
 ### Cross-language SEO + sharing
 - `metadata` object in `layout.tsx` carries title "Matdata Mitra — Voting, explained in your own language", a Hindi-aware description, OpenGraph card, locale `en_IN`, and keywords for both English and Devanagari brand variants.
@@ -127,7 +127,7 @@ A footer ribbon on the landing page openly labels the build as a **Preview**: *"
 | Language     | TypeScript (strict)                                                 |
 | Styling      | Tailwind CSS v4 with theme tokens mapped from CSS custom properties |
 | Fonts        | `next/font/google`: Plus Jakarta Sans, Tiro Devanagari Hindi, JetBrains Mono, 8× Noto Sans Indic |
-| AI           | `@google/generative-ai` (Gemini 1.5 Flash) — provider-pluggable     |
+| AI           | `@google/generative-ai` (Gemini 1.5 Flash)                          |
 | State        | React `useState` + localStorage. No global store, no Redux.         |
 | Tests        | Jest + Testing Library                                              |
 | Container    | Multi-stage Dockerfile, Node 20 Alpine, non-root user, 8080         |
@@ -194,14 +194,10 @@ npm run dev
 
 ### Environment variables
 
-| Var                          | Required          | Purpose                                                |
-|------------------------------|-------------------|--------------------------------------------------------|
-| `GEMINI_API_KEY`             | yes (default)     | Google AI Studio key                                   |
-| `AI_PROVIDER`                | no (default `gemini`) | Set to `void` to route through OpenAI-compat endpoint |
-| `VOID_API_KEY`               | iff `AI_PROVIDER=void` | Bearer token for OpenAI-compatible endpoint        |
-| `VOID_BASE_URL`              | no                | OpenAI-compatible base URL (default `https://api.voidai.app/v1`) |
-| `VOID_MODEL`                 | no                | Model name (default `gpt-4o-mini`)                     |
-| `NEXT_TELEMETRY_DISABLED`    | no (recommended)  | Set to `1` to opt out of Next telemetry                |
+| Var                          | Required      | Purpose                                  |
+|------------------------------|---------------|------------------------------------------|
+| `GEMINI_API_KEY`             | yes           | Google AI Studio key — get free at [aistudio.google.com](https://aistudio.google.com/apikey) |
+| `NEXT_TELEMETRY_DISABLED`    | no (recommended) | Set to `1` to opt out of Next telemetry |
 
 ---
 
