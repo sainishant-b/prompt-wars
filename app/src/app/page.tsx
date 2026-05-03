@@ -40,8 +40,10 @@ export default function Home() {
     handleLanguageChange(language === "en" ? "hi" : "en");
   };
 
-  const currentNative = LANGUAGES[language].nativeName;
+  const lang = LANGUAGES[language];
+  const currentNative = lang.nativeName;
   const otherCode = language === "en" ? "HI" : "EN";
+  const [ballotLine1, ballotLine2] = lang.ballotTitle.split("\n");
 
   return (
     <main className="mm flex min-h-screen flex-col paper-grain text-ink">
@@ -54,9 +56,9 @@ export default function Home() {
       </nav>
 
       {/* hero — two-column on desktop, stacked on mobile */}
-      <div className="grid flex-1 min-h-0 md:grid-cols-[1.15fr_1fr]">
+      <div className="grid md:grid-cols-[1.15fr_1fr]">
         {/* left column */}
-        <section className="relative flex flex-col justify-between px-6 py-10 md:px-14 md:py-14">
+        <section className="relative flex flex-col overflow-hidden px-6 py-10 md:px-14 md:py-14">
           <div
             className="chakra-bg pointer-events-none absolute hidden md:block"
             style={{
@@ -96,31 +98,32 @@ export default function Home() {
               className="text-[44px] font-bold leading-[0.98] tracking-[-0.02em] md:text-[76px] md:tracking-[-0.025em]"
               style={{ textWrap: "pretty" }}
             >
-              Voting,
+              {lang.heroLine1}
               <br />
               <span
                 className="font-medium italic"
                 style={{ color: "var(--saffron-deep)" }}
               >
-                explained
+                {lang.heroLine2Italic}
               </span>{" "}
-              in your
               <br />
-              own language.
+              {lang.heroLine3}
             </h1>
 
             <p
               className="font-indic mt-4 text-[17px] text-ink-2 md:mt-5 md:text-[22px]"
-              lang="hi"
+              lang={language}
             >
-              आपकी भाषा में, आपके अधिकार
+              {lang.heroSubtitle}
             </p>
 
             <p className="mt-4 max-w-[480px] text-sm leading-relaxed text-ink-2 md:mt-7 md:text-[17px] md:leading-[1.55]">
-              Talk to <b className="text-ink">Mitra</b>, your friendly guide to
-              Indian elections. Ask anything — registration, polling day, what
-              to do if your name is missing. Backed by ECI guidelines, RPA
-              1950 &amp; 1951, and the Constitution.
+              {lang.heroBody.split("Mitra").map((part, i, arr) => (
+                <span key={i}>
+                  {part}
+                  {i < arr.length - 1 && <b className="text-ink">Mitra</b>}
+                </span>
+              ))}
             </p>
 
             <div className="mt-7 flex flex-col gap-3 md:mt-8 md:flex-row md:items-center">
@@ -128,7 +131,7 @@ export default function Home() {
                 href="/map"
                 className="btn btn-primary w-full md:w-auto"
               >
-                Find your constituency
+                {lang.ctaMap}
                 <svg
                   width="16"
                   height="16"
@@ -149,13 +152,13 @@ export default function Home() {
                 href={`/chat?lang=${language}`}
                 className="btn btn-ghost w-full md:w-auto"
               >
-                Just chat with Mitra
+                {lang.ctaChat}
               </Link>
             </div>
           </div>
 
           {/* stamps */}
-          <div className="relative mt-10 flex flex-wrap items-center gap-3 md:mt-0 md:gap-4">
+          <div className="relative mt-10 flex flex-wrap items-center gap-3 md:gap-4">
             <StampBadge>ECI · Verified Sources</StampBadge>
             <StampBadge>RPA 1950 / 1951</StampBadge>
             <StampBadge>Constitution Art. 324</StampBadge>
@@ -166,15 +169,15 @@ export default function Home() {
         <aside className="flex flex-col gap-6 border-t border-paper-edge bg-paper-2 px-6 py-10 md:border-l md:border-t-0 md:px-12 md:py-14">
           <div className="ballot-stub" style={{ paddingLeft: 24 }}>
             <div className="eyebrow mb-1.5">
-              Form 001 · Choose your language
+              Form 001 · {lang.selectLanguagePrompt}
             </div>
             <h3
               className="text-[22px] font-semibold leading-tight tracking-tight md:text-[26px]"
               style={{ letterSpacing: "-0.01em" }}
             >
-              10 official languages.
+              {ballotLine1}
               <br />
-              Pick yours.
+              {ballotLine2}
             </h3>
           </div>
 
@@ -189,17 +192,15 @@ export default function Home() {
       >
         <p
           role="note"
-          className="mx-auto max-w-3xl text-center text-[13px] leading-relaxed text-ink-3 md:text-sm"
+          className="mx-auto max-w-3xl text-center text-[15px] leading-relaxed text-ink-2 md:text-[17px]"
         >
           <span
-            className="eyebrow mr-2 align-middle"
+            className="mr-2 align-middle font-mono text-[13px] font-semibold uppercase tracking-widest"
             style={{ color: "var(--saffron-deep)" }}
           >
             Preview
           </span>
-          Content shown is illustrative only. Verified, citation-backed
-          information from ECI guidelines, RPA 1950 / 1951 &amp; the
-          Constitution will land in the next version.
+          {lang.footerDisclaimer}
         </p>
 
         <div
@@ -212,7 +213,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              About
+              {lang.footerAbout}
               <ExternalArrow />
             </a>
             <a
@@ -221,7 +222,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Sources · ECI
+              {lang.footerSources}
               <ExternalArrow />
             </a>
             <button
@@ -241,7 +242,7 @@ export default function Home() {
                 style={{ background: "var(--green)" }}
               />
               <HelplineCallButton
-                label="Voter Helpline 1950 · 24×7"
+                label={`${lang.helplineLabel} · 24×7`}
                 variant="inline"
                 className="text-[11px]"
               />
