@@ -8,28 +8,56 @@ import {
 } from "@/lib/constituencies";
 
 interface Props {
-  open: boolean;
-  onClose: () => void;
   constituencyId: string | null;
   onPickConstituency: (id: string | null) => void;
+  /** Permanent sidebar (no overlay, no close button). Default true. */
+  permanent?: boolean;
+  /** Drawer-mode only: visible state. Ignored when permanent. */
+  open?: boolean;
+  /** Drawer-mode only: close handler. Ignored when permanent. */
+  onClose?: () => void;
 }
 
 export function LocationDrawer({
-  open,
-  onClose,
   constituencyId,
   onPickConstituency,
+  permanent = true,
+  open = false,
+  onClose,
 }: Props) {
   const c = constituencyId ? getConstituency(constituencyId) : undefined;
 
   useEffect(() => {
-    if (!open) return;
+    if (permanent || !open || !onClose) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  }, [permanent, open, onClose]);
+
+  if (permanent) {
+    return (
+      <aside
+        aria-label="Your constituency details"
+        className="flex h-full w-full flex-col overflow-y-auto border-l border-paper-edge bg-paper"
+      >
+        <header className="sticky top-0 z-10 border-b border-paper-edge bg-paper-2 px-5 py-3">
+          <div className="eyebrow">Your seat</div>
+          <h2 className="mt-1 text-base font-bold text-ink">
+            {c ? c.name : "Choose a constituency"}
+          </h2>
+        </header>
+        <div className="p-5">
+          {c ? (
+            <Body c={c} onChange={onPickConstituency} />
+          ) : (
+            <EmptyState onPick={onPickConstituency} />
+          )}
+        </div>
+      </aside>
+    );
+  }
 
   return (
     <>
@@ -70,7 +98,11 @@ export function LocationDrawer({
         </header>
 
         <div className="p-5">
-          {c ? <Body c={c} onChange={onPickConstituency} /> : <EmptyState onPick={onPickConstituency} />}
+          {c ? (
+            <Body c={c} onChange={onPickConstituency} />
+          ) : (
+            <EmptyState onPick={onPickConstituency} />
+          )}
         </div>
       </aside>
     </>

@@ -49,6 +49,7 @@ export function ChatWindow({
     try {
       const saved = window.localStorage.getItem(CONSTITUENCY_STORAGE_KEY);
       if (saved && isValidConstituencyId(saved)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setConstituencyId(saved);
       }
     } catch {
@@ -153,7 +154,8 @@ export function ChatWindow({
   };
 
   return (
-    <div className="flex h-full flex-col bg-paper">
+    <div className="flex h-full bg-paper">
+      <div className="flex h-full min-w-0 flex-1 flex-col">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-paper-edge bg-paper-2 px-4 py-3 sm:px-6">
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-paper-3">
@@ -175,7 +177,7 @@ export function ChatWindow({
           <button
             type="button"
             onClick={() => setDrawerOpen(true)}
-            className="inline-flex h-9 items-center gap-2 rounded-full border border-paper-edge bg-paper-2 px-3 text-xs font-medium text-ink transition-colors hover:bg-paper-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-ink"
+            className="inline-flex h-9 items-center gap-2 rounded-full border border-paper-edge bg-paper-2 px-3 text-xs font-medium text-ink transition-colors hover:bg-paper-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-ink lg:hidden"
             aria-label="Open constituency drawer"
             aria-haspopup="dialog"
             aria-expanded={drawerOpen}
@@ -213,7 +215,7 @@ export function ChatWindow({
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
-          className="flex items-center justify-between gap-3 border-b border-paper-edge bg-paper-2 px-4 py-2 text-left text-xs transition-colors hover:bg-paper-3 sm:px-6"
+          className="flex items-center justify-between gap-3 border-b border-paper-edge bg-paper-2 px-4 py-2 text-left text-xs transition-colors hover:bg-paper-3 sm:px-6 lg:hidden"
           aria-label={`Constituency context: ${constituency.name}. Open drawer for details.`}
         >
           <span className="flex items-center gap-2 text-ink">
@@ -333,18 +335,23 @@ export function ChatWindow({
       <HelplineBar language={language} />
 
       <LocationDrawer
+        permanent={false}
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         constituencyId={constituencyId}
         onPickConstituency={(id) => {
           setConstituencyId(id);
-          if (id !== null) {
-            // Keep drawer open so user sees their newly-selected seat
-            return;
-          }
-          // Cleared — keep drawer open so they can pick again
         }}
       />
+      </div>
+
+      <div className="hidden h-full w-[400px] shrink-0 lg:block">
+        <LocationDrawer
+          permanent
+          constituencyId={constituencyId}
+          onPickConstituency={(id) => setConstituencyId(id)}
+        />
+      </div>
     </div>
   );
 }

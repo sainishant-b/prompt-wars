@@ -79,7 +79,7 @@ export interface StreamChatParams {
   constituencyId?: string | null;
 }
 
-export async function* streamChat(
+async function* streamChatGemini(
   params: StreamChatParams,
 ): AsyncGenerator<string> {
   const { messages, language, level, apiKey, signal, constituencyId } = params;
@@ -108,4 +108,16 @@ export async function* streamChat(
     const text = chunk.text();
     if (text) yield text;
   }
+}
+
+export async function* streamChat(
+  params: StreamChatParams,
+): AsyncGenerator<string> {
+  const provider = (process.env.AI_PROVIDER || "gemini").toLowerCase();
+  if (provider === "void") {
+    const { streamChatVoid } = await import("./providers/void");
+    yield* streamChatVoid(params);
+    return;
+  }
+  yield* streamChatGemini(params);
 }

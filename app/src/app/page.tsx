@@ -2,8 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { LanguageSelector } from "@/components/LanguageSelector";
-import { DEFAULT_LANGUAGE, getLanguage, isValidLanguage } from "@/lib/language";
+import { HelplineCallButton } from "@/components/HelplineCallButton";
+import { LanguageBallot } from "@/components/LanguageBallot";
+import { StampBadge } from "@/components/StampBadge";
+import { Wordmark } from "@/components/Wordmark";
+import { DEFAULT_LANGUAGE, LANGUAGES, isValidLanguage } from "@/lib/language";
 import type { LanguageCode } from "@/lib/types";
 
 export default function Home() {
@@ -14,6 +17,7 @@ export default function Home() {
     try {
       const saved = window.localStorage.getItem("matdata-mitra:lang");
       if (saved && isValidLanguage(saved)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setLanguage(saved);
       }
     } catch {
@@ -32,210 +36,246 @@ export default function Home() {
     }
   };
 
-  const lang = getLanguage(language);
+  const toggleLang = () => {
+    handleLanguageChange(language === "en" ? "hi" : "en");
+  };
+
+  const currentNative = LANGUAGES[language].nativeName;
+  const otherCode = language === "en" ? "HI" : "EN";
 
   return (
-    <main className="flex min-h-screen flex-col bg-paper paper-grain">
+    <main className="mm flex min-h-screen flex-col paper-grain text-ink">
+      {/* top bar — wordmark only */}
       <nav
-        className="flex items-center justify-between border-b border-paper-edge bg-paper px-6 py-3"
+        className="flex items-center justify-between border-b border-paper-edge px-6 py-4 md:px-10 md:py-5"
         aria-label="Top navigation"
       >
-        <div className="flex items-center gap-2">
-          <GoogleGLogo />
-          <span className="text-base font-medium text-ink font-display">
-            <span className="text-saffron-deep">Matdata</span> Mitra
-          </span>
-        </div>
-        <a
-          href="https://eci.gov.in"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-ghost text-sm"
-        >
-          ECI
-          <svg
-            aria-hidden="true"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zM19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z" />
-          </svg>
-        </a>
+        <Wordmark size={20} />
       </nav>
 
-      <header className="px-6 pt-16 pb-8 text-center">
-        <h1
-          className="text-5xl font-normal tracking-tight sm:text-6xl"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          <span className="text-saffron-deep">Matdata</span>{" "}
-          <span className="text-ink">Mitra</span>
-        </h1>
-        <p
-          className="mx-auto mt-3 text-2xl font-normal text-ink-3"
-          lang="hi"
-        >
-          मतदाता मित्र
-        </p>
-        <p className="mx-auto mt-6 max-w-xl text-lg text-ink-3">
-          {lang.appTagline}
-        </p>
-      </header>
-
-      <section
-        className="mx-auto mt-4 w-full max-w-3xl px-6"
-        aria-labelledby="lang-heading"
-      >
-        <h2
-          id="lang-heading"
-          className="mb-4 text-center text-sm font-medium text-ink-3"
-        >
-          {lang.selectLanguagePrompt}
-        </h2>
-        <LanguageSelector value={language} onChange={handleLanguageChange} />
-      </section>
-
-      <div className="mx-auto mt-10 px-6">
-        <Link
-          href="/chat"
-          className="btn btn-primary !h-12 !px-8 !text-base"
-          aria-label={lang.startChatLabel}
-        >
-          {lang.startChatLabel}
-          <svg
+      {/* hero — two-column on desktop, stacked on mobile */}
+      <div className="grid flex-1 min-h-0 md:grid-cols-[1.15fr_1fr]">
+        {/* left column */}
+        <section className="relative flex flex-col justify-between px-6 py-10 md:px-14 md:py-14">
+          <div
+            className="chakra-bg pointer-events-none absolute hidden md:block"
+            style={{
+              right: -120,
+              bottom: -120,
+              width: 480,
+              height: 480,
+              opacity: 0.55,
+            }}
             aria-hidden="true"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
-          </svg>
-        </Link>
+          />
+          <div
+            className="chakra-bg pointer-events-none absolute md:hidden"
+            style={{
+              right: -80,
+              top: -40,
+              width: 240,
+              height: 240,
+              opacity: 0.4,
+            }}
+            aria-hidden="true"
+          />
+
+          <div className="relative">
+            <div className="mb-5 flex items-center gap-2">
+              <span className="eyebrow">Bharat · Lok Sabha 2024</span>
+              <span className="hidden h-px w-4 bg-paper-edge md:inline-block" />
+              <span
+                className="eyebrow hidden md:inline"
+                style={{ color: "var(--saffron-deep)" }}
+              >
+                Civic Education
+              </span>
+            </div>
+
+            <h1
+              className="text-[44px] font-bold leading-[0.98] tracking-[-0.02em] md:text-[76px] md:tracking-[-0.025em]"
+              style={{ textWrap: "pretty" }}
+            >
+              Voting,
+              <br />
+              <span
+                className="font-medium italic"
+                style={{ color: "var(--saffron-deep)" }}
+              >
+                explained
+              </span>{" "}
+              in your
+              <br />
+              own language.
+            </h1>
+
+            <p
+              className="font-indic mt-4 text-[17px] text-ink-2 md:mt-5 md:text-[22px]"
+              lang="hi"
+            >
+              आपकी भाषा में, आपके अधिकार
+            </p>
+
+            <p className="mt-4 max-w-[480px] text-sm leading-relaxed text-ink-2 md:mt-7 md:text-[17px] md:leading-[1.55]">
+              Talk to <b className="text-ink">Mitra</b>, your friendly guide to
+              Indian elections. Ask anything — registration, polling day, what
+              to do if your name is missing. Backed by ECI guidelines, RPA
+              1950 &amp; 1951, and the Constitution.
+            </p>
+
+            <div className="mt-7 flex flex-col gap-3 md:mt-8 md:flex-row md:items-center">
+              <Link
+                href="/map"
+                className="btn btn-primary w-full md:w-auto"
+              >
+                Find your constituency
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M5 12h14M13 5l7 7-7 7"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+              <Link
+                href={`/chat?lang=${language}`}
+                className="btn btn-ghost w-full md:w-auto"
+              >
+                Just chat with Mitra
+              </Link>
+            </div>
+          </div>
+
+          {/* stamps */}
+          <div className="relative mt-10 flex flex-wrap items-center gap-3 md:mt-0 md:gap-4">
+            <StampBadge>ECI · Verified Sources</StampBadge>
+            <StampBadge>RPA 1950 / 1951</StampBadge>
+            <StampBadge>Constitution Art. 324</StampBadge>
+          </div>
+        </section>
+
+        {/* right column — ballot-stub language ribbon */}
+        <aside className="flex flex-col gap-6 border-t border-paper-edge bg-paper-2 px-6 py-10 md:border-l md:border-t-0 md:px-12 md:py-14">
+          <div className="ballot-stub" style={{ paddingLeft: 24 }}>
+            <div className="eyebrow mb-1.5">
+              Form 001 · Choose your language
+            </div>
+            <h3
+              className="text-[22px] font-semibold leading-tight tracking-tight md:text-[26px]"
+              style={{ letterSpacing: "-0.01em" }}
+            >
+              10 official languages.
+              <br />
+              Pick yours.
+            </h3>
+          </div>
+
+          <LanguageBallot value={language} onChange={handleLanguageChange} />
+        </aside>
       </div>
 
-      <section
-        className="mx-auto mt-16 grid w-full max-w-5xl gap-4 px-6 sm:grid-cols-3"
-        aria-label="Features"
+      {/* footer — disclaimer + nav pills + helpline */}
+      <footer
+        className="border-t border-paper-edge bg-paper px-6 py-6 md:px-10 md:py-7"
+        aria-label="Site footer"
       >
-        <FeatureCard
-          icon={<TranslateIcon />}
-          color="var(--saffron-deep)"
-          title="10 Languages"
-          body="Hindi, English, Tamil, Telugu, Bengali, Marathi, Kannada, Malayalam, Gujarati, Punjabi"
-        />
-        <FeatureCard
-          icon={<TuneIcon />}
-          color="var(--green-deep)"
-          title="Adaptive Explanations"
-          body="Simple for first-timers, detailed citations for experts. Adjusts as you ask."
-        />
-        <FeatureCard
-          icon={<VerifiedIcon />}
-          color="var(--navy)"
-          title="Official Information"
-          body="Backed by ECI guidelines, RPA 1950 & 1951, and the Constitution of India."
-        />
-      </section>
-
-      <footer className="mt-auto px-6 py-10 text-center text-xs text-ink-3">
-        <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-2">
-          <span>Powered by</span>
-          <span className="font-medium text-ink">Google Gemini</span>
-          <span aria-hidden="true">·</span>
-          <span className="font-medium text-ink">Google Cloud Run</span>
-          <span aria-hidden="true">·</span>
-          <a
-            href="tel:1950"
-            className="font-medium text-saffron-deep hover:underline"
+        <p
+          role="note"
+          className="mx-auto max-w-3xl text-center text-[13px] leading-relaxed text-ink-3 md:text-sm"
+        >
+          <span
+            className="eyebrow mr-2 align-middle"
+            style={{ color: "var(--saffron-deep)" }}
           >
-            Voter Helpline 1950
-          </a>
-        </div>
-        <p className="mt-3">
-          Built for PromptWars Challenge 2 (Hack2skill × Google for Developers)
+            Preview
+          </span>
+          Content shown is illustrative only. Verified, citation-backed
+          information from ECI guidelines, RPA 1950 / 1951 &amp; the
+          Constitution will land in the next version.
         </p>
+
+        <div
+          className="mx-auto mt-5 flex max-w-5xl flex-col gap-4 border-t border-dashed border-paper-edge pt-5 md:flex-row md:items-center md:justify-between"
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            <a
+              className="pill"
+              href="https://github.com/sainishant-b/prompt-wars"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              About
+              <ExternalArrow />
+            </a>
+            <a
+              className="pill"
+              href="https://eci.gov.in"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Sources · ECI
+              <ExternalArrow />
+            </a>
+            <button
+              type="button"
+              className="pill"
+              onClick={toggleLang}
+              aria-label="Toggle interface language"
+            >
+              {currentNative} · {otherCode}
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between gap-4 md:justify-end">
+            <div className="flex items-center gap-2.5">
+              <span
+                className="h-2 w-2 rounded-full"
+                style={{ background: "var(--green)" }}
+              />
+              <HelplineCallButton
+                label="Voter Helpline 1950 · 24×7"
+                variant="inline"
+                className="text-[11px]"
+              />
+            </div>
+            <span
+              className="font-mono text-ink-3"
+              style={{ fontSize: 11 }}
+            >
+              v.1 · ©2024
+            </span>
+          </div>
+        </div>
       </footer>
     </main>
   );
 }
 
-function FeatureCard({
-  icon,
-  color,
-  title,
-  body,
-}: {
-  icon: React.ReactNode;
-  color: string;
-  title: string;
-  body: string;
-}) {
-  return (
-    <div className="rounded-[var(--r-xl)] bg-paper shadow-[var(--shadow-1)] border border-paper-edge p-6">
-      <div
-        className="mb-4 flex h-10 w-10 items-center justify-center rounded-full"
-        style={{ background: `color-mix(in oklab, ${color} 16%, transparent)` }}
-      >
-        <span style={{ color }}>{icon}</span>
-      </div>
-      <h3 className="text-lg font-medium text-ink">{title}</h3>
-      <p className="mt-2 text-sm text-ink-3">{body}</p>
-    </div>
-  );
-}
-
-function GoogleGLogo() {
+function ExternalArrow() {
   return (
     <svg
-      width="24"
-      height="24"
-      viewBox="0 0 48 48"
+      width="11"
+      height="11"
+      viewBox="0 0 24 24"
+      fill="none"
       aria-hidden="true"
-      role="img"
+      style={{ marginLeft: -2 }}
     >
       <path
-        fill="#EA4335"
-        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+        d="M7 17L17 7M9 7h8v8"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
-      <path
-        fill="#4285F4"
-        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
-      />
-      <path
-        fill="#FBBC05"
-        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
-      />
-      <path
-        fill="#34A853"
-        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
-      />
-    </svg>
-  );
-}
-
-function TranslateIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" />
-    </svg>
-  );
-}
-
-function TuneIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z" />
-    </svg>
-  );
-}
-
-function VerifiedIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z" />
     </svg>
   );
 }
